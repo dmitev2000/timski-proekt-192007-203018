@@ -1,6 +1,6 @@
 -- SCHEMA: develop
 
--- DROP SCHEMA IF NOT EXISTS develop;
+-- DROP SCHEMA IF EXISTS develop;
 
 CREATE SCHEMA IF NOT EXISTS develop
     AUTHORIZATION postgres;
@@ -49,8 +49,14 @@ CREATE TABLE develop.phones (
 	sensors VARCHAR(300) NOT NULL,
 	battery_type VARCHAR(150) NOT NULL,
 	battery_charging VARCHAR(100) NOT NULL,
-	misc_colors VARCHAR(150) NOT NULL,
 	misc_models VARCHAR(300) NOT NULL
+);
+
+CREATE TABLE develop.phone_colors (
+	phone_id INTEGER NOT NULL,
+	color VARCHAR(30) NOT NULL,
+	CONSTRAINT fk_phone_col FOREIGN KEY (phone_id) REFERENCES develop.phones(phone_id),
+	CONSTRAINT pk_phone_color PRIMARY KEY (phone_id, color)
 );
 
 CREATE TABLE develop.tech_shops (
@@ -80,9 +86,10 @@ CREATE TABLE develop.in_stock (
 	shop_id INTEGER NOT NULL,
 	phone_id INTEGER NOT NULL,
 	quantity INTEGER NOT NULL,
+	color VARCHAR(30) NOT NULL,
 	CONSTRAINT fk_shop FOREIGN KEY (shop_id) REFERENCES develop.tech_shops(shop_id),
 	CONSTRAINT fk_phone FOREIGN KEY (phone_id) REFERENCES develop.phones(phone_id),
-	CONSTRAINT pk_stock PRIMARY KEY (shop_id, phone_id)
+	CONSTRAINT pk_stock PRIMARY KEY (shop_id, phone_id, color)
 );
 
 CREATE TABLE develop.roles (
@@ -111,6 +118,7 @@ CREATE TABLE develop.products_in_carts (
 	cart_id INTEGER NOT NULL,
 	phone_id INTEGER NOT NULL,
 	shop_id INTEGER NOT NULL,
+	color VARCHAR(30) NOT NULL,
 	quantity INTEGER NOT NULL CHECK (quantity > 0),
 	CONSTRAINT fk_cart FOREIGN KEY (cart_id) REFERENCES develop.carts(cart_id)
 	ON DELETE CASCADE ON UPDATE CASCADE,
@@ -118,7 +126,7 @@ CREATE TABLE develop.products_in_carts (
 	ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_shop FOREIGN KEY (shop_id) REFERENCES develop.tech_shops(shop_id)
 	ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT pk_pic PRIMARY KEY (cart_id, phone_id, shop_id) 
+	CONSTRAINT pk_pic PRIMARY KEY (cart_id, phone_id, shop_id, color) 
 );
 
 CREATE TABLE develop.works_for (
@@ -140,6 +148,7 @@ CREATE TABLE develop.products_in_orders (
 	order_id INTEGER NOT NULL,
 	phone_id INTEGER NOT NULL,
 	shop_id INTEGER NOT NULL,
+	color VARCHAR(30) NOT NULL,
 	quantity INTEGER NOT NULL,
 	CONSTRAINT fk_order_ FOREIGN KEY (order_id) REFERENCES develop.orders(order_id)
 	ON DELETE CASCADE ON UPDATE CASCADE,
@@ -147,5 +156,5 @@ CREATE TABLE develop.products_in_orders (
 	ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_shop_ FOREIGN KEY (shop_id) REFERENCES develop.tech_shops(shop_id)
 	ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT pk_prod_in_ord PRIMARY KEY (order_id, phone_id, shop_id)
+	CONSTRAINT pk_prod_in_ord PRIMARY KEY (order_id, phone_id, shop_id, color)
 );
