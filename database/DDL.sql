@@ -73,15 +73,6 @@ CREATE TABLE develop.produce (
 	CONSTRAINT pk_produce PRIMARY KEY (brand_id, phone_id)
 );
 
-CREATE TABLE develop.sell (
-	shop_id INTEGER NOT NULL,
-	phone_id INTEGER NOT NULL,
-	price decimal NOT NULL,
-	CONSTRAINT fk_shop FOREIGN KEY (shop_id) REFERENCES develop.tech_shops(shop_id),
-	CONSTRAINT fk_phone FOREIGN KEY (phone_id) REFERENCES develop.phones(phone_id),
-	CONSTRAINT pk_sell PRIMARY KEY (shop_id, phone_id)
-);
-
 CREATE TABLE develop.in_stock (
 	shop_id INTEGER NOT NULL,
 	phone_id INTEGER NOT NULL,
@@ -158,3 +149,17 @@ CREATE TABLE develop.products_in_orders (
 	ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT pk_prod_in_ord PRIMARY KEY (order_id, phone_id, shop_id, color)
 );
+
+
+create table develop.history_prices(
+	hp_id serial not null primary key,
+	phone_id integer not null,
+	shop_id integer not null,
+	price decimal not null,
+	date_start date not null,
+	date_end date,
+	constraint fk_phone_id_hist foreign key (phone_id) references develop.phones(phone_id)
+	on delete cascade on update cascade,
+	constraint fk_shop_id_hist foreign key (shop_id) references develop.tech_shops(shop_id)
+	on delete cascade on update cascade
+)
