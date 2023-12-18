@@ -5,6 +5,7 @@ import client from "./db/index.js";
 
 // routers
 import PhoneRouter from "./routers/PhoneRouter.js";
+import AuthenticationRouter from "./routers/AuthenticationRouter.js";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.use(express.json());
 
 // TODO: Add routers
 app.use("/api/phones", PhoneRouter);
+app.use("/api/auth", AuthenticationRouter);
 
 // ! Error handler
 app.use((err, req, res, next) => {
