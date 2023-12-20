@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -8,9 +8,14 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import PropTypes from "prop-types";
+import AccountMenu from "../ui/AccountMenu";
+import { AuthContext } from "../../shared/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -81,6 +86,8 @@ const Drawer = styled(MuiDrawer, {
 const Layout = (props) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const AuthCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -118,7 +125,20 @@ const Layout = (props) => {
             <Typography variant="h6" noWrap component="div">
               APP NAME
             </Typography>
-            <span>ACCOUNT MENU</span>
+            {AuthCtx.user !== null ? (
+              <AccountMenu />
+            ) : (
+              <Button
+                variant="contained"
+                color="warning"
+                size="small"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Login
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>
@@ -133,7 +153,7 @@ const Layout = (props) => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-          LINKS AREA
+        <Link to="/">Home</Link>
         <Divider />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1 }}>
@@ -144,3 +164,7 @@ const Layout = (props) => {
 };
 
 export default Layout;
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};

@@ -1,16 +1,34 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+/* eslint-disable react/no-unescaped-entities */
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../shared/AuthContext";
+import { API_BASE_URL } from "../../shared/URLs";
+import axios from "axios";
 import "./auth.css";
+import { FireSuccessNotification } from "../../shared/ShowNotification";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const AuthCtx = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogin = (event) => {
     event.preventDefault();
-    // TODO: Implement login scenario
-    console.log(username, password);
+    setError(null);
+    axios
+      .post(`${API_BASE_URL}/auth/login`, { username, password })
+      .then((res) => {
+        AuthCtx.dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+        console.log(res.data);
+        FireSuccessNotification("You are now logged in.");
+        navigate("/");
+      })
+      .catch((err) => {
+        setError(err.response.data);
+        console.log(err);
+      });
   };
 
   return (

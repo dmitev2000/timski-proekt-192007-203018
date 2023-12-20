@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import axios from "axios";
 import "./auth.css";
+import { API_BASE_URL } from "../../shared/URLs";
+import { useNavigate } from "react-router-dom";
+import { FireSuccessNotification } from "../../shared/ShowNotification";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
@@ -10,11 +14,27 @@ const RegisterPage = () => {
   const [confPassword, setConfPassword] = useState("");
   const [seller, setSeller] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleRegister = (event) => {
-    // TODO: AJAX call to handle registration
     event.preventDefault();
-    console.log(username, password, seller, confPassword);
+
+    setError(null);
+    if (password !== confPassword) {
+      setError("Passwords don't match.");
+      return;
+    }
+    axios
+      .post(`${API_BASE_URL}/auth/register`, { username, password, seller })
+      .then((res) => {
+        console.log(res.data);
+        FireSuccessNotification(res.data);
+        navigate("/login");
+      })
+      .catch((err) => {
+        setError(err.response.data);
+        console.log(err);
+      });
   };
 
   return (
