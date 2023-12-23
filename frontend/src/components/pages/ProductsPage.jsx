@@ -1,57 +1,70 @@
-import { useEffect } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect, useState } from "react";
 import PageWrapper from "../layout/PageWrapper";
 import ProductList from "../ui/products/ProductList";
 import SearchProduct from "../ui/products/SearchProduct";
-import { Pagination } from "@mui/material";
 import FilterProducts from "../ui/products/filter/FilterProducts";
+import { API_BASE_URL } from "../../shared/URLs";
+import axios from "axios";
+import LoadingComponent from "../ui/LoadingComponent";
+import FilterContext from "../ui/products/filter/FilterProductsContext";
+import PaginationContext from "../ui/products/PaginationContext";
+import ProductsPagination from "../ui/products/ProductsPagination";
+import DisplayedProductsInfo from "../ui/products/DisplayedProductsInfo";
 
 const ProductsPage = () => {
-  // TODO: Fetch smartphones from the api
-  useEffect(() => {});
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);
 
-  const dummy_data = [
-    {
-      phone_id: 1,
-      phone_name: "Test1",
-      phone_img:
-        "https://cdn.shopify.com/s/files/1/0824/3121/t/204/assets/14plus-1682521510056.png?v=1682521531",
-      brand_name: "Brand1",
-      a_year: 2023,
-    },
-    {
-      phone_id: 2,
-      phone_name: "Test2",
-      phone_img:
-        "https://cdn.shopify.com/s/files/1/0824/3121/t/204/assets/14plus-1682521510056.png?v=1682521531",
-      brand_name: "Brand2",
-      a_year: 2022,
-    },
-    {
-      phone_id: 3,
-      phone_name: "Test3",
-      phone_img:
-        "https://cdn.shopify.com/s/files/1/0824/3121/t/204/assets/14plus-1682521510056.png?v=1682521531",
-      brand_name: "Brand2",
-      a_year: 2023,
-    },
-  ];
+  const FilterCtx = useContext(FilterContext);
+  const PaginationCtx = useContext(PaginationContext);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    axios
+      .get(`${API_BASE_URL}/phones`, {
+        params: {
+          brands:
+            FilterCtx.brands.length > 0 ? FilterCtx.brands.join(";") : null,
+          years: FilterCtx.years.length > 0 ? FilterCtx.years.join(";") : null,
+        },
+      })
+      .then((res) => {
+        //console.log(res.data);
+        setProducts(res.data);
+        PaginationCtx.updateTotalLength(res.data.length);
+      })
+      .catch((err) => {
+        setError(err);
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [FilterCtx.brands, FilterCtx.years, PaginationCtx.currentPage]);
+
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <PageWrapper>
-      <div className="d-flex justify-content-between align-items-center">
-        <h3>Products Page</h3>
-        <SearchProduct />
-      </div>
-      <FilterProducts />
-      <ProductList data={dummy_data} />
-      <Pagination
-        sx={{ float: "right", mt: 4 }}
-        count={dummy_data.length}
-        variant="outlined"
-        shape="circular"
-        showFirstButton
-        showLastButton
-      />
+      {error !== null ? (
+        <h3 className="text-danger">{error.message}</h3>
+      ) : (
+        <>
+          <div className="d-flex justify-content-between align-items-center">
+            <h3>Products Page</h3>
+            <SearchProduct />
+          </div>
+          <FilterProducts />
+          <DisplayedProductsInfo />
+          <ProductList data={products} />
+          <ProductsPagination />
+        </>
+      )}
     </PageWrapper>
   );
 };

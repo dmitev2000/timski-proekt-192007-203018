@@ -57,3 +57,27 @@ export const GetPhoneById = async (req, res, next) => {
     next(error);
   }
 };
+
+export const GetBrandsAndCountPhones = async (req, res, next) => {
+  try {
+    const query = `SELECT br.brand_id, br.brand_name, COUNT(pr.phone_id)::integer AS number_of_devices
+                        FROM develop.phone_brands br
+                        JOIN develop.produce pr ON br.brand_id = pr.brand_id
+                        GROUP BY br.brand_id, br.brand_name
+                        ORDER BY br.brand_name ASC;`;
+    const response_data = await client.query(query);
+    res.status(200).json(response_data.rows);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const GetYears = async (req, res, next) => {
+  try {
+    const query = `SELECT DISTINCT ph.a_year FROM develop.phones ph ORDER BY ph.a_year ASC`;
+    const response_data = await client.query(query);
+    res.status(200).json(response_data.rows);
+  } catch (error) {
+    next(error);
+  }
+};
