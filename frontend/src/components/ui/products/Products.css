@@ -17,3 +17,32 @@
 .product h4 {
   text-align: center;
 }
+
+.smartphone-search-btn {
+  border: solid 1px lightgray;
+  width: 60px;
+  outline: none;
+  border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background: transparent;
+}
+
+.smartphone-search-btn:hover {
+  border-color: black;
+}
+
+#clear-filters:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.total-products {
+  color: #1976d2;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.total-products span {
+  opacity: 0.5;
+}
