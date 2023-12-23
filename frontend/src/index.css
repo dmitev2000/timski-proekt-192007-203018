@@ -5,3 +5,8 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+
+.page-wrapper {
+  padding: 25px;
+  margin: 100px 25px 25px;
+}

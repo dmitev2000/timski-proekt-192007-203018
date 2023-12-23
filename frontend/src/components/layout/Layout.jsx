@@ -15,7 +15,8 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PropTypes from "prop-types";
 import AccountMenu from "../ui/AccountMenu";
 import { AuthContext } from "../../shared/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import DefaultLinks from "./DefaultLinks";
 
 const drawerWidth = 240;
 
@@ -153,7 +154,7 @@ const Layout = (props) => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <Link to="/">Home</Link>
+        <DefaultLinks />
         <Divider />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1 }}>
