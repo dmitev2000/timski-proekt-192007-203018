@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import client from "./db/index.js";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
 // routers
 import PhoneRouter from "./routers/PhoneRouter.js";
@@ -9,11 +11,17 @@ import AuthenticationRouter from "./routers/AuthenticationRouter.js";
 
 dotenv.config();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// * Enables access to the images from the frontend
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 // TODO: Add routers
 app.use("/api/phones", PhoneRouter);
