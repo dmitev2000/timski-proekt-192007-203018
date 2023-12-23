@@ -46,3 +46,38 @@
 .total-products span {
   opacity: 0.5;
 }
+
+.brand-logo {
+  max-height: 70px;
+  max-width: 150px;
+}
+
+.p-details-wrapper img {
+  max-width: 450px;
+  max-height: 600px;
+}
+
+.p-details {
+  padding: auto 25px;
+}
+
+.most-important-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin-bottom: 25px;
+}
+
+.most-important-details span {
+  display: block;
+}
+
+.most-important-details>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+}
