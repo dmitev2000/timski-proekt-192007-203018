@@ -97,9 +97,6 @@ insert into develop.tech_shops (shop_id, shop_name, shop_logo) values
 (default, 'iStyle', 'istyle.png'),
 (default, 'Setec', 'setec.png')
 
-insert into develop.sell (shop_id, phone_id, price) values 
-(1, 4, 78100), (2, 4, 81990), (3, 4, 79999), (1, 2, 53990)
-
 insert into develop.in_stock (shop_id, phone_id, quantity) values 
 (1, 4, 2), (2, 4, 5), (3, 4, 0), (1, 2, 2)
 

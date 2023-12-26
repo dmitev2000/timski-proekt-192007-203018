@@ -81,3 +81,26 @@ export const GetYears = async (req, res, next) => {
     next(error);
   }
 };
+
+export const GetPriceAndAvailabilityOfDevice = async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    const query = `SELECT ph.phone_id, ph.phone_name, ts.shop_id, ts.shop_name, ts.shop_logo, pb.brand_name, pb.brand_logo, se.price, q1.total_qty 
+                      FROM develop.phones ph 
+                      JOIN develop.sell se ON ph.phone_id = se.phone_id
+                      JOIN develop.produce pr ON ph.phone_id = pr.phone_id
+                      JOIN develop.phone_brands pb ON pr.brand_id = pb.brand_id
+                      JOIN develop.tech_shops ts ON ts.shop_id = se.shop_id
+                      JOIN (
+                        SELECT st.phone_id, st.shop_id, SUM(st.quantity) AS total_qty
+                          FROM develop.in_stock st
+                          GROUP BY st.phone_id, st.shop_id
+                        ) AS q1 ON ph.phone_id = q1.phone_id AND ts.shop_id = q1.shop_id
+                      WHERE ph.phone_id = ${id}
+                      ORDER BY se.price ASC`;
+    const response_data = await client.query(query);
+    res.status(200).json(response_data.rows);
+  } catch (error) {
+    next(error);
+  }
+};
