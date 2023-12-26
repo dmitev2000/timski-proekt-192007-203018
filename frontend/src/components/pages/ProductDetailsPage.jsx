@@ -6,7 +6,7 @@ import axios from "axios";
 import DetailsAccordions from "../ui/products/DetailsAccordions";
 import MostImportantDetails from "../ui/products/MostImportantDetails";
 import PageBreadcrumbs from "../layout/PageBreadcrumbs";
-import LoadingComponent from "../ui/LoadingComponent"
+import LoadingComponent from "../ui/LoadingComponent";
 
 const ProductDetailsPage = () => {
   const [phoneData, setPhoneData] = useState({});
@@ -38,13 +38,12 @@ const ProductDetailsPage = () => {
     return <LoadingComponent />;
   }
 
-
   return (
     <PageWrapper>
       <div className="container px-4">
         <div>
           <div className="d-flex justify-content-between align-items-center flex-wrap">
-            <div className="my-5">
+            <div className="mb-5">
               <PageBreadcrumbs links={links} />
             </div>
             <img
@@ -84,7 +83,7 @@ const ProductDetailsPage = () => {
         </div>
       </div>
     </PageWrapper>
-  )
-}
+  );
+};
 
 export default ProductDetailsPage;

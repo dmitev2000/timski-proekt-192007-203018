@@ -3,6 +3,7 @@ import {
   GetAllPhones,
   GetBrandsAndCountPhones,
   GetPhoneById,
+  GetPriceAndAvailabilityOfDevice,
   GetYears,
 } from "../controllers/PhoneController.js";
 
@@ -15,5 +16,7 @@ router.get("/:id", GetPhoneById);
 router.get("/brands/count", GetBrandsAndCountPhones);
 
 router.get("/years/distinct", GetYears);
+
+router.get("/available/in", GetPriceAndAvailabilityOfDevice);
 
 export default router;
