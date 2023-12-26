@@ -6,10 +6,10 @@ const { Client } = pg;
 
 const client = new Client({
   host: "localhost",
-  database: "postgres",
+  database: "develop",
   port: 5432,
   user: "postgres",
-  password: "postgrelocal",
+  password: "postgres",
 });
 
 export default client;

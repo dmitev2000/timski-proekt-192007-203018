@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 // routers
 import PhoneRouter from "./routers/PhoneRouter.js";
 import AuthenticationRouter from "./routers/AuthenticationRouter.js";
+import CartRouter from "./routers/CartRouter.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 // TODO: Add routers
 app.use("/api/phones", PhoneRouter);
 app.use("/api/auth", AuthenticationRouter);
+app.use("/api/cart", CartRouter);
 
 // ! Error handler
 app.use((err, req, res, next) => {
