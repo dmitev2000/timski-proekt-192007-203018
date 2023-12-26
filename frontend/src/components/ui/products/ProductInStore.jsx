@@ -17,7 +17,7 @@ import { FireSuccessNotification } from "../../../shared/ShowNotification";
 const ProductInStore = ({ element, brand, phone, phone_id, shop }) => {
   const AuthCtx = useContext(AuthContext);
   const [quantity, setQuantity] = useState(0);
-  console.log(element);
+  //console.log(element);
 
   const increment = () => {
     setQuantity((prev) => prev + 1);
@@ -94,7 +94,12 @@ const ProductInStore = ({ element, brand, phone, phone_id, shop }) => {
           >
             +
           </Button>
-          <Button onClick={addToCart} sx={{ mx: 2 }} title="Add to cart">
+          <Button
+            disabled={quantity === 0}
+            onClick={addToCart}
+            sx={{ mx: 2 }}
+            title="Add to cart"
+          >
             <AddShoppingCartIcon />
           </Button>
         </div>
@@ -108,8 +113,8 @@ ProductInStore.propTypes = {
   element: PropTypes.object.isRequired,
   brand: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
-  phone_id: PropTypes.string.isRequired,
-  shop: PropTypes.string.isRequired,
+  phone_id: PropTypes.number.isRequired,
+  shop: PropTypes.number.isRequired,
 };
 
 export default ProductInStore;
