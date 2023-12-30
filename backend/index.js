@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import PhoneRouter from "./routers/PhoneRouter.js";
 import AuthenticationRouter from "./routers/AuthenticationRouter.js";
 import CartRouter from "./routers/CartRouter.js";
+import OrderRouter from "./routers/OrderRouter.js";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/api/phones", PhoneRouter);
 app.use("/api/auth", AuthenticationRouter);
 app.use("/api/cart", CartRouter);
+app.use("/api/orders", OrderRouter);
 
 // ! Error handler
 app.use((err, req, res, next) => {

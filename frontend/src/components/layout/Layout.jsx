@@ -156,8 +156,12 @@ const Layout = (props) => {
         </DrawerHeader>
         <Divider />
         <DefaultLinks />
-        <Divider />
-        <UserLinks />
+        {AuthCtx.user && (
+          <>
+            <Divider />
+            <UserLinks />
+          </>
+        )}
         <Divider />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1 }}>

@@ -1,0 +1,92 @@
+.order {
+  width: 350px;
+  height: 200px;
+  border-radius: 5px;
+  border: solid 2px #1976d2;
+  position: relative;
+  transition: all 0.5s;
+}
+
+.order:hover {
+  box-shadow: 0 0 5px #1976d2;
+  cursor: pointer;
+}
+
+.order-header {
+  background-color: #1976d2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: 25px;
+  padding: 5px;
+}
+
+.order-overlay {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 0;
+  position: absolute;
+  top: 47.5px;
+  left: 0;
+  width: 100%;
+  background-color: #004270;
+  transition: all 0.3s linear;
+  z-index: 10;
+  overflow: hidden;
+  font-size: 30px;
+}
+
+.order:hover .order-overlay {
+  height: calc(100% - 47.5px);
+}
+
+.order-body {
+  color: #1976d2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+}
+
+.order-footer {
+  padding: 5px;
+  text-align: right;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.product-in-order {
+  position: relative;
+  box-shadow: 0 0 3px gray;
+  margin-bottom: 25px;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 25px;
+}
+
+.product-in-order img {
+  max-height: 150px;
+}
+
+.product-in-order .brand {
+  position: absolute;
+  bottom: 25px;
+  right: 30px;
+  max-height: 25px;
+}

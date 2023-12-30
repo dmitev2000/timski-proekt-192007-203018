@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../shared/URLs";
 import Swal from "sweetalert2";
 import axios from "axios";
+import PageWrapper from "../layout/PageWrapper";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -78,36 +79,38 @@ const Cart = () => {
   }
 
   return (
-    <div className="container px-5">
-      {error ? (
-        <h4 className="text-danger text-center">{error}</h4>
-      ) : (
-        <div className={cartItems.length === 0 ? "" : "py-5"}>
-          {cartItems.length === 0 ? (
-            <EmptyCart />
-          ) : (
-            <div className="pt-4 mt-5">
-              <div className="d-flex justify-content-between align-items-center">
-                <PageBreadcrumbs links={links} />
-                <button
-                  onClick={emptyCart}
-                  className="cart-buttons cart-buttons-danger rounded"
-                >
-                  <span>Empty cart</span>
-                  <RemoveShoppingCartIcon />
-                </button>
+    <PageWrapper>
+      <div className="px-5">
+        {error ? (
+          <h4 className="text-danger text-center">{error}</h4>
+        ) : (
+          <div>
+            {cartItems.length === 0 ? (
+              <EmptyCart />
+            ) : (
+              <div className="pt-4">
+                <div className="d-flex justify-content-between align-items-center">
+                  <PageBreadcrumbs links={links} />
+                  <button
+                    onClick={emptyCart}
+                    className="cart-buttons cart-buttons-danger rounded"
+                  >
+                    <span>Empty cart</span>
+                    <RemoveShoppingCartIcon />
+                  </button>
+                </div>
+                <CartItemsList cartItems={cartItems} />
+                <CartFooter
+                  subtotal={cartItems.reduce((acc, item) => {
+                    return acc + item.quantity * item.price;
+                  }, 0)}
+                />
               </div>
-              <CartItemsList cartItems={cartItems} />
-              <CartFooter
-                subtotal={cartItems.reduce((acc, item) => {
-                  return acc + item.quantity * item.price;
-                }, 0)}
-              />
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+            )}
+          </div>
+        )}
+      </div>
+    </PageWrapper>
   );
 };
 

@@ -12,6 +12,8 @@ import { FilterContextProvider } from "./components/ui/products/filter/FilterPro
 import { PaginationContextProvider } from "./components/ui/products/PaginationContext";
 import Cart from "./components/pages/Cart";
 import { ReloadCartProvider } from "./components/ui/cart/ReloadCartContext";
+import MyOrders from "./components/pages/MyOrders";
+import OrderDetails from "./components/pages/OrderDetails";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/products/:id" element={<ProductDetailsPage />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/orders" element={<MyOrders />} />
+                <Route path="/orders/:id" element={<OrderDetails />} />
                 {/* Error hanler routes */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
