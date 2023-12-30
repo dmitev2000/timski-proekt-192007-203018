@@ -104,3 +104,14 @@ export const GetPriceAndAvailabilityOfDevice = async (req, res, next) => {
     next(error);
   }
 };
+
+export const PhoneInStore = async (req, res, next) => {
+  try {
+    const { phone_id, shop_id } = req.query;
+    const query = `SELECT * FROM develop.in_stock WHERE phone_id = $1 AND shop_id = $2`;
+    const dataToSend = (await client.query(query, [phone_id, shop_id])).rows;
+    res.status(200).json(dataToSend);
+  } catch (error) {
+    next(error);
+  }
+};

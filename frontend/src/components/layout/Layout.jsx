@@ -17,6 +17,7 @@ import AccountMenu from "../ui/AccountMenu";
 import { AuthContext } from "../../shared/AuthContext";
 import { useNavigate } from "react-router-dom";
 import DefaultLinks from "./DefaultLinks";
+import UserLinks from "./UserLinks";
 
 const drawerWidth = 240;
 
@@ -155,6 +156,8 @@ const Layout = (props) => {
         </DrawerHeader>
         <Divider />
         <DefaultLinks />
+        <Divider />
+        <UserLinks />
         <Divider />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1 }}>

@@ -40,10 +40,10 @@ const ProductDetailsPage = () => {
 
   return (
     <PageWrapper>
-      <div className="container px-4">
+      <div className="container">
         <div>
-          <div className="d-flex justify-content-between align-items-center flex-wrap">
-            <div className="mb-5">
+          <div className="mb-5 d-flex justify-content-between align-items-center flex-wrap">
+            <div>
               <PageBreadcrumbs links={links} />
             </div>
             <img
@@ -55,7 +55,7 @@ const ProductDetailsPage = () => {
           {error ? (
             <p className="text-danger">{error.message}</p>
           ) : (
-            <div className="d-flex justify-content-between align-items-start gap-5 p-details-wrapper">
+            <div className="px-4 d-flex justify-content-between align-items-start gap-5 p-details-wrapper">
               <img
                 src={`${IMAGES_URL}/devices/${phoneData.phone_img}`}
                 alt={phoneData.phone_name}

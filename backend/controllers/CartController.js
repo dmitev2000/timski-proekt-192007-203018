@@ -77,6 +77,7 @@ export const AddProductToCart = async (req, res, next) => {
     }
     res.status(200).json(resp_message);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
