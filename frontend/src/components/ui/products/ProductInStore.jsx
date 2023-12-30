@@ -53,7 +53,7 @@ const ProductInStore = ({ element, brand, phone, phone_id, shop }) => {
 
   return (
     <>
-      <ListItem button>
+      <ListItem button disabled={element.quantity === 0}>
         <ListItemText
           primary={brand.concat(" ", phone)}
           secondary={"Color: ".concat(element.color)}
@@ -78,6 +78,7 @@ const ProductInStore = ({ element, brand, phone, phone_id, shop }) => {
             <OutlinedInput
               type="number"
               value={quantity}
+              disabled={element.quantity === 0}
               endAdornment={
                 <InputAdornment position="end">Quantity</InputAdornment>
               }

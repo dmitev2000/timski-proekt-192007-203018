@@ -29,6 +29,7 @@ const ProductAvailability = ({ phone_id }) => {
       .then((res) => {
         //console.log(res.data);
         setAvailableIn(res.data);
+        
         setLoading(false);
       })
       .catch((err) => console.log(err));

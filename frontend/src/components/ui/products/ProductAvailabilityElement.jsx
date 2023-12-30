@@ -108,6 +108,7 @@ const ProductAvailabilityElement = ({ element }) => {
                 phone={element.phone_name}
                 phone_id={element.phone_id}
                 shop={element.shop_id}
+                openDialog={openDialog}
               />
             );
           })}
