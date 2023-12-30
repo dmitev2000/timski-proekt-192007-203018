@@ -18,6 +18,16 @@ import { AuthContext } from "../../shared/AuthContext";
 import { useNavigate } from "react-router-dom";
 import DefaultLinks from "./DefaultLinks";
 import UserLinks from "./UserLinks";
+import AdminDrawerLinksList from "./AdminDrawerLinksList";
+
+const checkAdmin = (u) => {
+  if (u?.user) {
+    if (u.user.role === 1) {
+      return true;
+    }
+  }
+  return false;
+};
 
 const drawerWidth = 240;
 
@@ -160,6 +170,12 @@ const Layout = (props) => {
           <>
             <Divider />
             <UserLinks />
+          </>
+        )}
+        {checkAdmin(AuthCtx.user) && (
+          <>
+            <AdminDrawerLinksList />
+            <Divider />
           </>
         )}
         <Divider />

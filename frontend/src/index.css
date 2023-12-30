@@ -10,3 +10,17 @@
   padding: 25px;
   margin: 100px 25px 25px;
 }
+
+.accounts {
+  height: 400px;
+  width: 100%;
+  margin-top: 50px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.table-pagination p {
+  margin: 0;
+}
