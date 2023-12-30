@@ -49,6 +49,7 @@ const CartItem = ({ item }) => {
           phone_id: item.phone_id,
           shop_id: item.shop_id,
           color: item.color,
+          quantityToAdd: 1,
         },
         {
           headers: {
