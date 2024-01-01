@@ -1,8 +1,7 @@
 import PageBreadcrumbs from "../../layout/PageBreadcrumbs";
 import PageWrapper from "../../layout/PageWrapper";
-import AreaChartElement from "./charts/AreaChartElement";
-import RadialBarChartElement from "./charts/RadialBarChartElement";
-
+import AreaChartElement from "../../ui/admin/charts/AreaChartElement";
+import RadialBarChartElement from "../../ui/admin/charts/RadialBarChartElement";
 
 const Insights = () => {
   const links = [

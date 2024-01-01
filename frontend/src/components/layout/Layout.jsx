@@ -19,10 +19,20 @@ import { useNavigate } from "react-router-dom";
 import DefaultLinks from "./DefaultLinks";
 import UserLinks from "./UserLinks";
 import AdminDrawerLinksList from "./AdminDrawerLinksList";
+import SellerDrawerLinks from "./SellerDrawerLinks";
 
 const checkAdmin = (u) => {
   if (u?.user) {
     if (u.user.role === 1) {
+      return true;
+    }
+  }
+  return false;
+};
+
+const checkSeller = (u) => {
+  if (u?.user) {
+    if (u.user.role === 3) {
       return true;
     }
   }
@@ -175,6 +185,12 @@ const Layout = (props) => {
         {checkAdmin(AuthCtx.user) && (
           <>
             <AdminDrawerLinksList />
+            <Divider />
+          </>
+        )}
+        {checkSeller(AuthCtx.user) && (
+          <>
+            <SellerDrawerLinks />
             <Divider />
           </>
         )}

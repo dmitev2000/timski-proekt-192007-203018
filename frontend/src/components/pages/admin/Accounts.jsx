@@ -56,7 +56,7 @@ const Accounts = () => {
   }, [DashCtx.reloadUsers]);
 
   return (
-    <div className="container py-5 my-5">
+    <div className="container px-5 py-4 my-5">
       <div className="pt-3 dashboard-page">
         <div className="my-4 d-flex justify-content-between align-items-center flex-wrap">
           <PageBreadcrumbs links={links} />

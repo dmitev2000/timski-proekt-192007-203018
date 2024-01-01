@@ -9,8 +9,12 @@ import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import ListItemText from "@mui/material/ListItemText";
-import axios from "axios";
 import { API_BASE_URL } from "../../../shared/URLs";
+import {
+  FireErrorNotification,
+  FireSuccessNotification,
+} from "../../../shared/ShowNotification";
+import axios from "axios";
 
 const AddNewDeviceToDb = () => {
   const [loading, setLoading] = useState(true);
@@ -90,9 +94,13 @@ const AddNewDeviceToDb = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
+        FireSuccessNotification(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        FireErrorNotification(err.data);
+      });
   };
 
   return (

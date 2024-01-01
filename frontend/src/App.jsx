@@ -20,6 +20,8 @@ import Dashboard from "./components/pages/admin/Dashboard";
 import Devices from "./components/pages/admin/Devices";
 import AllOrders from "./components/pages/admin/AllOrders";
 import Insights from "./components/pages/admin/Insights";
+import AddDevice from "./components/pages/seller/AddDevice";
+import OurCatalogue from "./components/pages/seller/OurCatalogue";
 
 function App() {
   return (
@@ -63,6 +65,9 @@ function App() {
                     path="admin/dashboard/insights"
                     element={<Insights />}
                   ></Route>
+                  {/* Seller routes */}
+                  <Route path="/add-device" element={<AddDevice />} />
+                  <Route path="/our-catalogue" element={<OurCatalogue />} />
                   {/* Error hanler routes */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
