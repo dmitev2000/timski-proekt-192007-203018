@@ -14,6 +14,14 @@ import Cart from "./components/pages/Cart";
 import { ReloadCartProvider } from "./components/ui/cart/ReloadCartContext";
 import MyOrders from "./components/pages/MyOrders";
 import OrderDetails from "./components/pages/OrderDetails";
+import { ReloadDashboardProvider } from "./components/ui/admin/ReloadDashboardContext";
+import Accounts from "./components/pages/admin/Accounts";
+import Dashboard from "./components/pages/admin/Dashboard";
+import Devices from "./components/pages/admin/Devices";
+import AllOrders from "./components/pages/admin/AllOrders";
+import Insights from "./components/pages/admin/Insights";
+import AddDevice from "./components/pages/seller/AddDevice";
+import OurCatalogue from "./components/pages/seller/OurCatalogue";
 
 function App() {
   return (
@@ -22,22 +30,48 @@ function App() {
         <FilterContextProvider>
           <PaginationContextProvider>
             <ReloadCartProvider>
-              <Routes>
-                {/* Default routes */}
-                <Route path="/" element={<HomePage />} />
-                {/* Auth routes */}
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
-                <Route path="/logout" element={<LogoutPage />} />
-                {/* Products routes */}
-                <Route path="/products" element={<ProductsPage />} />
-                <Route path="/products/:id" element={<ProductDetailsPage />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/orders" element={<MyOrders />} />
-                <Route path="/orders/:id" element={<OrderDetails />} />
-                {/* Error hanler routes */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <ReloadDashboardProvider>
+                <Routes>
+                  {/* Default routes */}
+                  <Route path="/" element={<HomePage />} />
+                  {/* Auth routes */}
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/logout" element={<LogoutPage />} />
+                  {/* Products routes */}
+                  <Route path="/products" element={<ProductsPage />} />
+                  <Route
+                    path="/products/:id"
+                    element={<ProductDetailsPage />}
+                  />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/orders" element={<MyOrders />} />
+                  <Route path="/orders/:id" element={<OrderDetails />} />
+                  {/* Admin routes */}
+                  <Route path="/admin/dashboard" element={<Dashboard />} />
+                  <Route
+                    path="/admin/dashboard/accounts"
+                    element={<Accounts />}
+                  />
+                  <Route
+                    path="/admin/dashboard/devices"
+                    element={<Devices />}
+                  />
+                  <Route
+                    path="/admin/dashboard/orders"
+                    element={<AllOrders />}
+                  ></Route>
+                  <Route
+                    path="admin/dashboard/insights"
+                    element={<Insights />}
+                  ></Route>
+                  {/* Seller routes */}
+                  <Route path="/add-device" element={<AddDevice />} />
+                  <Route path="/our-catalogue" element={<OurCatalogue />} />
+                  {/* Error hanler routes */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </ReloadDashboardProvider>
             </ReloadCartProvider>
           </PaginationContextProvider>
         </FilterContextProvider>

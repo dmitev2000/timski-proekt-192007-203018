@@ -1,6 +1,5 @@
 import client from "../db/index.js";
 
-// ? GET ALL PHONES (or apply filter by brands and years)
 export const GetAllPhones = async (req, res, next) => {
   try {
     const brands =
@@ -43,7 +42,6 @@ export const GetAllPhones = async (req, res, next) => {
   }
 };
 
-// ? GET One Phone by ID
 export const GetPhoneById = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -111,6 +109,41 @@ export const PhoneInStore = async (req, res, next) => {
     const query = `SELECT * FROM develop.in_stock WHERE phone_id = $1 AND shop_id = $2`;
     const dataToSend = (await client.query(query, [phone_id, shop_id])).rows;
     res.status(200).json(dataToSend);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const CountPhones = async (req, res, next) => {
+  try {
+    const query = `SELECT COUNT(*) AS total FROM develop.phones`;
+    const a = (await client.query(query)).rows[0];
+    res.status(200).json(a.total);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const GetBrands = async (req, res, next) => {
+  try {
+    const query = `SELECT brand_name FROM develop.phone_brands`;
+    const brands = (await client.query(query)).rows;
+    res.status(200).json(brands);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const GetPhonesForSeller = async (req, res, next) => {
+  try {
+    const { shop_id } = req.body;
+    const query = `SELECT pb.brand_name, pb.brand_logo, ph.phone_name, ph.phone_id, ph.phone_img, ph.a_year, s.price 
+                      FROM develop.phones ph
+                      JOIN develop.produce pr ON pr.phone_id = ph.phone_id
+                      JOIN develop.phone_brands pb ON pb.brand_id = pr.brand_id 
+                      LEFT JOIN develop.sell s ON ph.phone_id = s.phone_id AND s.shop_id = $1`;
+    const data = (await client.query(query, [shop_id])).rows;
+    res.status(200).json(data);
   } catch (error) {
     next(error);
   }

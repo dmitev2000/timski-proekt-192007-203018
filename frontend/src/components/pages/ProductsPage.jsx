@@ -54,7 +54,7 @@ const ProductsPage = () => {
       {error !== null ? (
         <h3 className="text-danger">{error.message}</h3>
       ) : (
-        <>
+        <div className="mx-4">
           <div className="d-flex justify-content-between align-items-center">
             <h3>Products Page</h3>
             <SearchProduct />
@@ -63,7 +63,7 @@ const ProductsPage = () => {
           <DisplayedProductsInfo />
           <ProductList data={products} />
           <ProductsPagination />
-        </>
+        </div>
       )}
     </PageWrapper>
   );

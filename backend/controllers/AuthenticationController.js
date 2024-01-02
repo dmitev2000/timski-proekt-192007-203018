@@ -93,3 +93,13 @@ export const Login = async (req, res, next) => {
     next(error);
   }
 };
+
+export const GetAdminRoleID = async (req, res, next) => {
+  try {
+    const query = `SELECT role_id FROM develop.roles r WHERE r.role_name = $1`;
+    const resp = await client.query(query, ["Admin"]);
+    res.status(200).json(resp.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};

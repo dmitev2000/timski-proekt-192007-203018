@@ -114,3 +114,54 @@ export const GetOrderDetails = async (req, res, next) => {
     next(error);
   }
 };
+
+export const GetRecentOrders = async (req, res, next) => {
+  try {
+    const query = `SELECT ord.order_id, 
+                        ord.order_date,
+                        u.user_name,
+                        q1.total
+                      FROM develop.orders ord
+                      JOIN develop.users u ON u.user_id = ord.user_id
+                      JOIN (
+                        SELECT 
+                            pio.order_id, 
+                            SUM(pio.quantity * sel.price) AS total
+                          FROM develop.products_in_orders pio
+                          JOIN develop.sell sel ON sel.phone_id = pio.phone_id AND sel.shop_id = pio.shop_id
+                        GROUP BY pio.order_id
+                      ) AS q1 ON q1.order_id = ord.order_id
+                      ORDER BY ord.order_date DESC
+                      LIMIT 5
+                      `;
+    const resp = (await client.query(query)).rows;
+    res.status(200).json(resp);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+export const GetAllOrders = async (req, res, next) => {
+  try {
+    const query = `SELECT ord.order_id, ord.order_date, u.user_id, u.user_name, pio.phone_id, pio.shop_id, pio.color, pio.quantity, q1.total
+                    FROM develop.orders ord
+                    JOIN develop.users u ON ord.user_id = u.user_id
+                    JOIN develop.products_in_orders pio ON pio.order_id = ord.order_id
+                    JOIN develop.sell s ON s.shop_id = pio.shop_id AND s.phone_id = pio.phone_id
+                    JOIN develop.phones ph ON ph.phone_id = pio.phone_id
+                    JOIN (
+                       SELECT 
+                           pio.order_id, 
+                           SUM(pio.quantity * sel.price) AS total
+                         FROM develop.products_in_orders pio
+                         JOIN develop.sell sel ON sel.phone_id = pio.phone_id AND sel.shop_id = pio.shop_id
+                       GROUP BY pio.order_id
+                     ) AS q1 ON q1.order_id = ord.order_id
+                     ORDER BY ord.order_date DESC`;
+    const orders = (await client.query(query)).rows;
+    res.status(200).json(orders);
+  } catch (error) {
+    next(error);
+  }
+};

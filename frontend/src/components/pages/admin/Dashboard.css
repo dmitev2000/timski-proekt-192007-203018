@@ -1,0 +1,83 @@
+.dash-boxes-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.dash-box {
+  border-radius: 15px;
+  padding: 20px;
+  min-width: 250px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 55px;
+}
+
+.dash-box .icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80px;
+  height: 80px;
+}
+
+.dash-box .icon-wrapper-users {
+  background-color: lightpink;
+}
+
+.dash-box .icon-wrapper-device {
+  background-color: lightblue;
+}
+
+.dash-box .icon-wrapper-orders {
+  background-color: gold;
+}
+
+.dash-box .icon-wrapper-sales {
+  background-color: lightsalmon;
+}
+
+.dash-box .bigger {
+  font-size: 25px;
+}
+
+.recent-orders {
+  padding: 20px;
+  border: solid 2px #1976d2;
+  border-radius: 15px;
+}
+
+.recent-orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.delivered {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.processing {
+  background-color: coral;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.placed {
+  background-color: #1976d2;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+@media screen and (min-width: 2000px) {
+  .dash-boxes-wrapper {
+    justify-content: center;
+  }
+}
