@@ -162,3 +162,32 @@ export const AddDeviceToDB = async (req, res, next) => {
     next(CreateError(500, "Failed to save the device."));
   }
 };
+
+export const GetLastWeekSales = async (req, res, next) => {
+  try {
+    const query = `
+              SELECT
+              DATE(ord.order_date) AS order_date,
+              pb.brand_name,
+              SUM(pio.quantity) AS total_quantity
+                  FROM
+                      develop.orders ord
+                  JOIN
+                      develop.products_in_orders pio ON ord.order_id = pio.order_id
+                  JOIN
+                      develop.produce pr ON pr.phone_id = pio.phone_id
+                  JOIN
+                      develop.phone_brands pb ON pb.brand_id = pr.brand_id
+                  GROUP BY
+                      DATE(ord.order_date),
+                      pb.brand_name
+                  ORDER BY
+              order_date, pb.brand_name;
+    `;
+
+    const resp = (await client.query(query)).rows;
+    res.status(200).json(resp);
+  } catch (error) {
+    next(error);
+  }
+};

@@ -5,6 +5,7 @@ import {
   DeleteUsers,
   ExportToCSV,
   GetCustomers,
+  GetLastWeekSales,
   GetUsers,
   TotalSales,
   VerifySellerAccount,
@@ -47,5 +48,7 @@ router.post(
 router.put("/sellers/verify", VerifyToken, VerifyAdmin, VerifySellerAccount);
 
 router.get("/export/csv", VerifyToken, VerifyAdmin, ExportToCSV);
+
+router.get("/get/week-stats", VerifyToken, VerifyAdmin, GetLastWeekSales);
 
 export default router;
