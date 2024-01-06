@@ -28,6 +28,7 @@ const DeviceAutoComplete = () => {
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
   const [color, setColor] = useState("");
+  const [menuColors, setMenuColors] = useState([]);
   const AuthCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -61,6 +62,17 @@ const DeviceAutoComplete = () => {
         );
       });
   }, []);
+
+  useEffect(() => {
+    if (value && value.phone_id) {
+      axios
+        .get(`${API_BASE_URL}/phones/devices/colors?phone_id=${value.phone_id}`)
+        .then((res) => {
+          setMenuColors(res.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [value]);
 
   const Save = () => {
     axios
@@ -242,13 +254,14 @@ const DeviceAutoComplete = () => {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {["White", "Black"].map((element) => {
-                  return (
-                    <MenuItem value={element} key={element}>
-                      {element}
-                    </MenuItem>
-                  );
-                })}
+                {menuColors &&
+                  menuColors.map((element) => {
+                    return (
+                      <MenuItem value={element.color} key={element.color}>
+                        {element.color}
+                      </MenuItem>
+                    );
+                  })}
               </Select>
             </FormControl>
             <Button type="submit" variant="outlined">

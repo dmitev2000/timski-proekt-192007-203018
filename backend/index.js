@@ -12,6 +12,7 @@ import CartRouter from "./routers/CartRouter.js";
 import OrderRouter from "./routers/OrderRouter.js";
 import AdminRouter from "./routers/AdminRouter.js";
 import SellerRouter from "./routers/SellerRouter.js";
+import ShopRouter from "./routers/ShopRouter.js";
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use("/api/cart", CartRouter);
 app.use("/api/orders", OrderRouter);
 app.use("/api/admin", AdminRouter);
 app.use("/api/seller", SellerRouter);
+app.use("/api/shops", ShopRouter);
 
 // ! Error handler
 app.use((err, req, res, next) => {

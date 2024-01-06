@@ -28,9 +28,19 @@ export const PlaceOrder = async (req, res, next) => {
 
     if (Array.isArray(rows) && rows.length > 0) {
       const query4 = `INSERT INTO develop.products_in_orders (order_id, phone_id, shop_id, color, quantity) VALUES ($1, $2, $3, $4, $5)`;
+      const query5 = `UPDATE develop.in_stock 
+                        SET quantity = quantity - $4 
+                      WHERE phone_id = $1 AND shop_id = $2 AND color = $3`;
       for (const row of rows) {
         await client.query(query4, [
           +order_id,
+          row.phone_id,
+          row.shop_id,
+          row.color,
+          row.quantity,
+        ]);
+
+        await client.query(query5, [
           row.phone_id,
           row.shop_id,
           row.color,
@@ -144,7 +154,7 @@ export const GetRecentOrders = async (req, res, next) => {
 
 export const GetAllOrders = async (req, res, next) => {
   try {
-    const query = `SELECT ord.order_id, ord.order_date, u.user_id, u.user_name, pio.phone_id, pio.shop_id, pio.color, pio.quantity, q1.total
+    const query = `SELECT DISTINCT ord.order_id, ord.order_date, u.user_id, u.user_name, q1.total
                     FROM develop.orders ord
                     JOIN develop.users u ON ord.user_id = u.user_id
                     JOIN develop.products_in_orders pio ON pio.order_id = ord.order_id

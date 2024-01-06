@@ -25,7 +25,8 @@
   border: solid 1px white;
 }
 
-.auth form input {
+.auth form input,
+.auth form select {
   padding: 10px;
   width: 100%;
   border: none;
@@ -59,4 +60,14 @@
 
 .auth .logout-info p {
   margin: 0;
+}
+
+.auth form input[type="submit"] {
+  border: solid 2px #1976d2;
+}
+
+.auth form input[type="submit"]:hover {
+  color: white;
+  background-color: #1976d2;
+  border: solid 2px white;
 }
