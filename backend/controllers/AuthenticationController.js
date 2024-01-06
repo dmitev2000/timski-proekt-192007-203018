@@ -106,10 +106,11 @@ export const GetAdminRoleID = async (req, res, next) => {
 
 export const RegisterSellerWithNewShop = async (req, res, next) => {
   try {
-    // const imageFileName = req.file.originalname;
-    // const { username, password } = req.body;
-    // console.log(username, password);
-    // console.log(imageFileName);
+    //const imageFileName = req.file.originalname;
+    console.log(req.body);
+    const { username, password } = req.body;
+    console.log(username, password);
+    //console.log(imageFileName);
     res.status(200).json("OK");
   } catch (error) {
     console.log(error);

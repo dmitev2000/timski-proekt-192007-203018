@@ -148,3 +148,14 @@ export const GetPhonesForSeller = async (req, res, next) => {
     next(error);
   }
 };
+
+export const GetDeviceColors = async (req, res, next) => {
+  try {
+    const { phone_id } = req.query;
+    const query = `SELECT color FROM develop.phone_colors WHERE phone_id = $1`;
+    const resp = (await client.query(query, [phone_id])).rows;
+    res.status(200).json(resp);
+  } catch (error) {
+    next(error);
+  }
+};

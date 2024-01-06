@@ -40,14 +40,20 @@ const RegisterPage = () => {
       return;
     }
     if (seller && newShop) {
+      //const form = document.getElementById("registerForm");
       const formData = new FormData(event.currentTarget);
+      //const formData = new FormData(form);
 
       axios
-        .post(`${API_BASE_URL}/auth/register-seller`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post(
+          `${API_BASE_URL}/auth/register-seller`,
+          { formData },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((res) => {
           console.log(res.data);
           FireSuccessNotification(res.data);
@@ -84,11 +90,12 @@ const RegisterPage = () => {
     <div className="auth">
       <form
         onSubmit={handleRegister}
-        id="register-form"
+        id="registerForm"
         encType="multipart/form-data"
       >
         <h3 className="text-light">Register</h3>
         <input
+          id="usernameInput"
           type="text"
           placeholder="Username"
           name="username"
@@ -99,6 +106,7 @@ const RegisterPage = () => {
           required
         />
         <input
+          id="passwordInput"
           type="password"
           placeholder="Password"
           name="password"
@@ -109,6 +117,7 @@ const RegisterPage = () => {
           required
         />
         <input
+          id="confPasswordInput"
           type="password"
           placeholder="Confirm password"
           name="confirmPassword"
@@ -125,7 +134,7 @@ const RegisterPage = () => {
           <FormControlLabel
             control={
               <Checkbox
-                id="seller-cb"
+                id="sellerCb"
                 name="seller"
                 style={{
                   color: "white",
@@ -143,6 +152,7 @@ const RegisterPage = () => {
         </FormGroup>
         {seller && !newShop && shopList && (
           <select
+            id="shopInput"
             onChange={(e) => setShop(e.target.value)}
             className="form-select form-control"
             name="shop"
@@ -164,6 +174,7 @@ const RegisterPage = () => {
             <FormControlLabel
               control={
                 <Checkbox
+                  id="newShopCb"
                   name="newShopCb"
                   style={{
                     color: "white",
@@ -186,6 +197,7 @@ const RegisterPage = () => {
               type="text"
               placeholder="Shop name"
               name="newShopName"
+              id="newShopName"
               className="form-control"
               required={seller && newShop}
               onChange={(e) => {
@@ -200,7 +212,7 @@ const RegisterPage = () => {
                 required={seller && newShop}
                 className="form-control"
                 type="file"
-                id="shop-logo"
+                id="shopLogo"
                 name="shopLogo"
                 accept="image/png, image/gif, image/jpeg"
               />

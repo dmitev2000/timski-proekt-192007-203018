@@ -145,7 +145,7 @@ const Layout = (props) => {
             }}
           >
             <Typography variant="h6" noWrap component="div">
-              APP NAME
+              E-Phones
             </Typography>
             {AuthCtx.user !== null ? (
               <AccountMenu />
