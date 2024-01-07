@@ -49,6 +49,7 @@ const Accounts = () => {
         },
       })
       .then((res) => {
+        //console.log(res.data);
         setUsers(res.data);
         setLoading(false);
       })

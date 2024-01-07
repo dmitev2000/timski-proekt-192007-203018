@@ -6,18 +6,23 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import CloseIcon from "@mui/icons-material/Close";
-import ShuffleIcon from '@mui/icons-material/Shuffle';
 import Logout from "@mui/icons-material/Logout";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../shared/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { FireSuccessNotification } from "../../shared/ShowNotification";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ChecklistIcon from "@mui/icons-material/Checklist";
 
 const AccountMenu = () => {
   const AuthCtx = useContext(AuthContext);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const handleNavigate = (link) => {
+    navigate(link);
+  };
 
   const handleLogout = () => {
     AuthCtx.dispatch({ type: "LOGOUT" });
@@ -92,15 +97,21 @@ const AccountMenu = () => {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem style={{ width: "200px" }} onClick={handleClose}>
           <Avatar /> {AuthCtx.user.user.username}
         </MenuItem>
         <Divider />
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={() => handleNavigate("cart")}>
           <ListItemIcon>
-            <ShuffleIcon fontSize="small" />
+            <ShoppingCartIcon fontSize="small" />
           </ListItemIcon>
-          Something else ...
+          My Cart
+        </MenuItem>
+        <MenuItem onClick={() => handleNavigate("orders")}>
+          <ListItemIcon>
+            <ChecklistIcon fontSize="small" />
+          </ListItemIcon>
+          My Orders
         </MenuItem>
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
