@@ -36,6 +36,7 @@ const LoginPage = () => {
       <form onSubmit={handleLogin}>
         <h3 className="text-light">Login</h3>
         <input
+          className="form-control"
           type="text"
           placeholder="Username"
           onChange={(e) => {
@@ -44,6 +45,7 @@ const LoginPage = () => {
           required
         />
         <input
+          className="form-control"
           type="password"
           placeholder="Password"
           onChange={(e) => {
@@ -51,7 +53,7 @@ const LoginPage = () => {
           }}
           required
         />
-        <input type="submit" value="Submit" />
+        <input type="submit" className="rounded" value="Submit" />
         {error && (
           <p className="text-danger fw-bold text-center m-2">{error}</p>
         )}

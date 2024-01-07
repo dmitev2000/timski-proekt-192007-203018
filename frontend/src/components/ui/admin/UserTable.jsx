@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import ReloadDashboard from "./ReloadDashboardContext";
 import { FireSuccessNotification } from "../../../shared/ShowNotification";
@@ -25,6 +26,7 @@ import Table from "@mui/material/Table";
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
+import Swal from "sweetalert2";
 import axios from "axios";
 
 const UserTable = ({ users, title }) => {
@@ -36,54 +38,72 @@ const UserTable = ({ users, title }) => {
   const DashCtx = useContext(ReloadDashboard);
 
   const DeleteHandler = async () => {
-    axios
-      .delete(`${API_BASE_URL}/admin/users`, {
-        headers: {
-          Authorization: `Bearer ${AuthCtx.user.token}`,
-        },
-        data: {
-          user_ids: selected,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        DashCtx.updateReloadUsers();
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "You are about to delete the user/s. Are you sure?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      confirmButtonColor: "crimson",
+      cancelButtonColor: "#1976d2",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`${API_BASE_URL}/admin/users`, {
+            headers: {
+              Authorization: `Bearer ${AuthCtx.user.token}`,
+            },
+            data: {
+              user_ids: selected,
+            },
+          })
+          .then((res) => {
+            FireSuccessNotification(res.data);
+            DashCtx.updateReloadUsers();
+          })
+          .catch((err) => console.log(err));
+      }
+    });
   };
 
   const VerifyHandler = async () => {
-    console.log(selected);
-    if (selected.length > 0) {
-      for (let i = 0; i < selected.length; i++) {
-        const resp = await axios.put(
-          `${API_BASE_URL}/admin/sellers/verify`,
-          {
-            seller_id: selected[i],
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${AuthCtx.user.token}`,
-              "Content-Type": "application/json",
+    Swal.fire({
+      title: "Verify user/s?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      confirmButtonColor: "crimson",
+      cancelButtonColor: "#1976d2",
+    }).then(async (result) => {
+      if (result.isConfirmed && selected.length > 0) {
+        for (let i = 0; i < selected.length; i++) {
+          const resp = await axios.put(
+            `${API_BASE_URL}/admin/sellers/verify`,
+            {
+              seller_id: selected[i],
             },
-          }
-        );
-        FireSuccessNotification(resp.data);
+            {
+              headers: {
+                Authorization: `Bearer ${AuthCtx.user.token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          FireSuccessNotification(resp.data);
+        }
+        DashCtx.updateReloadUsers();
       }
-    }
-    DashCtx.updateReloadUsers();
+    });
   };
 
-  const createData = (id, user_name, verified) => {
+  const createData = (id, user_name, shop, verified) => {
     return {
       id,
       user_name,
+      shop,
       verified,
     };
   };
 
   const rows = users.map((c) => {
-    return createData(c.id, c.user_name, c.verified);
+    return createData(c.id, c.user_name, c.shop, c.verified);
   });
 
   const headCells = [
@@ -94,6 +114,10 @@ const UserTable = ({ users, title }) => {
     {
       id: "user_name",
       label: "Username",
+    },
+    {
+      id: "shop",
+      label: "Works for",
     },
     {
       id: "verified",
@@ -289,6 +313,9 @@ const UserTable = ({ users, title }) => {
                       {row.id}
                     </TableCell>
                     <TableCell align="left">{row.user_name}</TableCell>
+                    <TableCell align="left">
+                      {row.shop ? row.shop : "none"}
+                    </TableCell>
                     <TableCell align="left">
                       {row.verified ? "yes" : "no"}
                     </TableCell>

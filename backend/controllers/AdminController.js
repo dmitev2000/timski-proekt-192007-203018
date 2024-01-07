@@ -17,8 +17,10 @@ export const GetCustomers = async (req, res, next) => {
 
 export const GetUsers = async (req, res, next) => {
   try {
-    const query = `SELECT u.user_id as id, u.user_name, u.verified, r.role_name FROM develop.users u
-                        JOIN develop.roles r ON u.role_id = r.role_id`;
+    const query = `SELECT u.user_id as id, u.user_name, u.verified, r.role_name, ts.shop_name as shop FROM develop.users u
+                        JOIN develop.roles r ON u.role_id = r.role_id
+                        LEFT JOIN develop.works_for wf ON wf.user_id = u.user_id
+                        LEFT JOIN develop.tech_shops ts ON ts.shop_id = wf.shop_id`;
     const resp = await client.query(query);
     res.status(200).json(resp.rows);
   } catch (error) {

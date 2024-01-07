@@ -5,7 +5,7 @@ import { CreateError, VerifyPasswordFormat } from "../shared/Utils.js";
 
 export const Register = async (req, res, next) => {
   try {
-    const { username, password, seller } = req.body;
+    const { username, password, seller, shop } = req.body;
     const validatePassword = VerifyPasswordFormat(password);
     if (!validatePassword.valid) {
       return next(validatePassword.error);
@@ -34,6 +34,16 @@ export const Register = async (req, res, next) => {
     const cart_query =
       "INSERT INTO develop.carts(cart_id, user_id) VALUES (default, $1)";
     await client.query(cart_query, [user_id]);
+
+    if (seller) {
+      const works_for_query = `INSERT INTO develop.works_for (user_id, shop_id) VALUES (
+        (SELECT user_id FROM develop.users WHERE user_name = $1),
+        $2
+      )`;
+
+      await client.query(works_for_query, [username, shop]);
+    }
+
     res.status(200).json("Your account has been created.");
   } catch (error) {
     if (+error.code === 23505) {
@@ -106,12 +116,44 @@ export const GetAdminRoleID = async (req, res, next) => {
 
 export const RegisterSellerWithNewShop = async (req, res, next) => {
   try {
-    //const imageFileName = req.file.originalname;
-    console.log(req.body);
-    const { username, password } = req.body;
-    console.log(username, password);
-    //console.log(imageFileName);
-    res.status(200).json("OK");
+    const { username, password, newShopName } = req.body;
+    const file = req.file;
+    const query = `INSERT INTO develop.tech_shops (shop_id, shop_name, shop_logo) VALUES (default, $1, $2)`;
+    await client.query(query, [newShopName, file.originalname]);
+
+    const salt = bcrypt.genSaltSync(10);
+    const encryptedPassword = bcrypt.hashSync(password, salt);
+    const role_query = "SELECT role_id FROM develop.roles WHERE role_name = $1";
+    const response = await client.query(role_query, ["Seller"]);
+
+    const { role_id } = response.rows[0];
+    const insert_query =
+      "INSERT INTO develop.users(user_id, user_name, user_password, role_id, verified) VALUES (default, $1, $2, $3, $4)";
+    await client.query(insert_query, [
+      username,
+      encryptedPassword,
+      role_id,
+      false,
+    ]);
+    const user_query = "SELECT user_id FROM develop.users WHERE user_name = $1";
+    const user_response = await client.query(user_query, [username]);
+    const { user_id } = user_response.rows[0];
+    const cart_query =
+      "INSERT INTO develop.carts(cart_id, user_id) VALUES (default, $1)";
+    await client.query(cart_query, [user_id]);
+
+    const works_for_query = `INSERT INTO develop.works_for (user_id, shop_id) VALUES (
+      (SELECT user_id FROM develop.users WHERE user_name = $1),
+      (SELECT shop_id FROM develop.tech_shops WHERE shop_name = $2)
+    )`;
+
+    await client.query(works_for_query, [username, newShopName]);
+
+    res
+      .status(200)
+      .json(
+        `Seller account ${username} with new shop ${newShopName} was created.`
+      );
   } catch (error) {
     console.log(error);
     next(CreateError(500, "Internal server error"));
