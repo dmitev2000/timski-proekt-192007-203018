@@ -42,7 +42,7 @@ const Insights = () => {
 
   return (
     <PageWrapper>
-      <div className="mx-4">
+      <div className="mx-4 py-4">
         <PageBreadcrumbs links={links} />
         <div className="d-flex justify-content-center align-items-center flex-column gap-5 py-5">
           <AreaChartElement weekSales={weekSales} />

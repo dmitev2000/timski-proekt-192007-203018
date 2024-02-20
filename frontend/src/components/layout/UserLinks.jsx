@@ -14,7 +14,7 @@ const UserLinks = () => {
   const AuthCtx = useContext(AuthContext);
 
   const links = [
-    { name: AuthCtx.user.user.username, path: "/" },
+    { name: AuthCtx.user.user.username, path: "/profile" },
     { name: "My Cart", path: "/cart" },
     { name: "My Orders", path: "/orders" },
   ];

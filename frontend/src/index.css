@@ -24,3 +24,15 @@
 .table-pagination p {
   margin: 0;
 }
+
+.custom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.custom-row > * {
+  max-width: 45%;
+}

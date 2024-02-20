@@ -42,18 +42,25 @@ const RegisterPage = () => {
     if (seller && newShop) {
       //const form = document.getElementById("registerForm");
       const formData = new FormData(event.currentTarget);
-      //const formData = new FormData(form);
+      // const formData = new FormData();
+
+      // formData.append("username", username);
+      // formData.append("password", password);
+      // formData.append("seller", seller);
+
+      // formData.append("shop", shop);
+      // formData.append("newShop", newShop);
+      // formData.append("newShopName", newShopName);
+
+      // const imageInput = document.getElementById("image");
+      // formData.append("image", imageInput.files[0]);
 
       axios
-        .post(
-          `${API_BASE_URL}/auth/register-seller`,
-          { formData },
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
+        .post(`${API_BASE_URL}/auth/register-seller`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((res) => {
           console.log(res.data);
           FireSuccessNotification(res.data);
@@ -67,7 +74,7 @@ const RegisterPage = () => {
       axios
         .post(
           `${API_BASE_URL}/auth/register`,
-          { username, password, seller },
+          { username, password, seller, shop },
           {
             headers: {
               "Content-Type": "application/json",
@@ -95,7 +102,7 @@ const RegisterPage = () => {
       >
         <h3 className="text-light">Register</h3>
         <input
-          id="usernameInput"
+          id="username"
           type="text"
           placeholder="Username"
           name="username"
@@ -106,7 +113,7 @@ const RegisterPage = () => {
           required
         />
         <input
-          id="passwordInput"
+          id="password"
           type="password"
           placeholder="Password"
           name="password"
@@ -117,7 +124,7 @@ const RegisterPage = () => {
           required
         />
         <input
-          id="confPasswordInput"
+          id="confirmPassword"
           type="password"
           placeholder="Confirm password"
           name="confirmPassword"
@@ -134,7 +141,7 @@ const RegisterPage = () => {
           <FormControlLabel
             control={
               <Checkbox
-                id="sellerCb"
+                id="seller"
                 name="seller"
                 style={{
                   color: "white",
@@ -152,7 +159,7 @@ const RegisterPage = () => {
         </FormGroup>
         {seller && !newShop && shopList && (
           <select
-            id="shopInput"
+            id="shop"
             onChange={(e) => setShop(e.target.value)}
             className="form-select form-control"
             name="shop"
@@ -174,8 +181,8 @@ const RegisterPage = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  id="newShopCb"
-                  name="newShopCb"
+                  id="newShop"
+                  name="newShop"
                   style={{
                     color: "white",
                   }}
@@ -212,8 +219,8 @@ const RegisterPage = () => {
                 required={seller && newShop}
                 className="form-control"
                 type="file"
-                id="shopLogo"
-                name="shopLogo"
+                id="image"
+                name="image"
                 accept="image/png, image/gif, image/jpeg"
               />
             </div>
