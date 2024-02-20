@@ -22,6 +22,7 @@ import AllOrders from "./components/pages/admin/AllOrders";
 import Insights from "./components/pages/admin/Insights";
 import AddDevice from "./components/pages/seller/AddDevice";
 import OurCatalogue from "./components/pages/seller/OurCatalogue";
+import UserProfile from "./components/pages/UserProfile";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                   {/* Default routes */}
                   <Route path="/" element={<HomePage />} />
                   {/* Auth routes */}
+                  <Route path="/profile" element={<UserProfile />} />
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<RegisterPage />} />
                   <Route path="/logout" element={<LogoutPage />} />

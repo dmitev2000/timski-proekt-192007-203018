@@ -10,6 +10,7 @@ import {
   FireSuccessNotification,
 } from "../../../shared/ShowNotification";
 import { useNavigate } from "react-router-dom";
+import { getColor } from "../../../shared/Utils";
 
 const CartItem = ({ item }) => {
   const AuthCtx = useContext(AuthContext);
@@ -112,7 +113,7 @@ const CartItem = ({ item }) => {
             <span className="text-muted">Color:</span>{" "}
             <div
               className="phone-color"
-              style={{ background: item.color }}
+              style={{ backgroundColor: getColor(item.color) }}
             ></div>
           </div>
         </div>
